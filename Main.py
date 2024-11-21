@@ -1,18 +1,18 @@
 import pygame
+from tkinter import *
 import time
 import random
-
-# Inicialização
 pygame.init()
+
+# Configurações do jogo
 largura, altura = 600, 400
+tamanho_bloco = 10
+velocidade = 5
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo da Cobrinha')
 preto, branco, vermelho, verde, azul = (0, 0, 0), (255, 255, 255), (200, 0, 0), (0, 200, 0), (0, 0, 200)
 relogio = pygame.time.Clock()
 
-# Configurações do jogo
-tamanho_bloco = 10
-velocidade = 15
 fonte = pygame.font.SysFont(None, 35)
 
 def mensagem(msg, cor, x, y):
@@ -48,13 +48,13 @@ def jogo():
             if evento.type == pygame.QUIT:
                 sair = True
             if evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_LEFT:
+                if evento.key == pygame.K_LEFT or evento.key == pygame.K_a:
                     x1_mudanca, y1_mudanca = -tamanho_bloco, 0
-                elif evento.key == pygame.K_RIGHT:
+                elif evento.key == pygame.K_RIGHT or evento.key == pygame.K_d:
                     x1_mudanca, y1_mudanca = tamanho_bloco, 0
-                elif evento.key == pygame.K_UP:
+                elif evento.key == pygame.K_UP or evento.key == pygame.K_w:
                     x1_mudanca, y1_mudanca = 0, -tamanho_bloco
-                elif evento.key == pygame.K_DOWN:
+                elif evento.key == pygame.K_DOWN or evento.key == pygame.K_s:
                     x1_mudanca, y1_mudanca = 0, tamanho_bloco
 
         if x1 >= largura or x1 < 0 or y1 >= altura or y1 < 0:
