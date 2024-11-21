@@ -98,6 +98,7 @@ def main():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 return
+            #Colocar comandos IA aqui
             elif evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_UP or evento.key == pygame.K_w:
                     cobra.mudar_direcao((0, -1))
