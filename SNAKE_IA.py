@@ -50,6 +50,14 @@ class Snake:
         self.pontos = 0
         self.velocidade = VELOCIDADE
 
+    @property
+    def x(self):
+        return self.posicoes[0][0]
+        
+    @property
+    def y(self):
+        return self.posicoes[0][1]
+
     def pegar_cabeca(self):
         return self.posicoes[0]
 
@@ -79,6 +87,14 @@ class Comida:
         self.cor = VERMELHO
         self.gerar_nova_posicao()
 
+    @property
+    def x(self):
+        return self.posicao[0]
+        
+    @property
+    def y(self):
+        return self.posicao[1]
+
     def gerar_nova_posicao(self):
         x = random.randrange(0, LARGURA, TAMANHO_BLOCO)
         y = random.randrange(0, ALTURA, TAMANHO_BLOCO)
@@ -99,15 +115,17 @@ def main():
                 pygame.quit()
                 return
             #Colocar comandos IA aqui
-            elif evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_UP or evento.key == pygame.K_w:
-                    cobra.mudar_direcao((0, -1))
-                elif evento.key == pygame.K_DOWN or evento.key == pygame.K_s:
-                    cobra.mudar_direcao((0, 1))
-                elif evento.key == pygame.K_LEFT or evento.key == pygame.K_a:
-                    cobra.mudar_direcao((-1, 0))
-                elif evento.key == pygame.K_RIGHT or evento.key == pygame.K_d:
+            elif cobra.y == comida.y:
+                if cobra.x == comida.x:
+                    cobra.mudar_direcao((0, 0))
+            if cobra.y < comida.y:
+                cobra.mudar_direcao((0, 1))
+                if cobra.x < comida.x:
                     cobra.mudar_direcao((1, 0))
+            elif cobra.y > comida.y:
+                cobra.mudar_direcao((0, -1))
+                if cobra.x > comida.x:
+                    cobra.mudar_direcao((-1, 0))
 
         # Movimento e colisão
         if not cobra.mover():
