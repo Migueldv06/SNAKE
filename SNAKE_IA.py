@@ -114,18 +114,15 @@ def main():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 return
-            #Colocar comandos IA aqui
-        if cobra.y == comida.y:
-            if cobra.x == comida.x:
-                cobra.mudar_direcao((0, 0))
+        #Colocar comandos IA aqui
         if cobra.y < comida.y:
             cobra.mudar_direcao((0, 1))
-            if cobra.x < comida.x:
-                cobra.mudar_direcao((1, 0))
-        elif cobra.y > comida.y:
+        if cobra.y > comida.y:
             cobra.mudar_direcao((0, -1))
-            if cobra.x > comida.x:
-                cobra.mudar_direcao((-1, 0))
+        if cobra.x < comida.x:
+            cobra.mudar_direcao((1, 0))
+        if cobra.x > comida.x:
+            cobra.mudar_direcao((-1, 0))
 
         # Movimento e colisão
         if not cobra.mover():
