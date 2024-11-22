@@ -115,6 +115,14 @@ def main():
                 pygame.quit()
                 return
         #Colocar comandos IA aqui
+        if cobra.y == comida.y and cobra.x > comida.x and cobra.direcao ((1, 0)):
+            cobra.mudar_direcao((random.sample(-1,1,k=1)))
+        if cobra.y == comida.y and cobra.x < comida.x and cobra.direcao ((-1, 0)):
+            cobra.mudar_direcao((random.sample(-1,1,k=1)))
+        if cobra.x == comida.x and cobra.y > comida.y and cobra.direcao ((0, 1)):
+            cobra.mudar_direcao((random.sample(-1,1,k=1)), 0)
+        if cobra.y == comida.y and cobra.x < comida.x and cobra.direcao ((0, -1)):
+            cobra.mudar_direcao((random.sample(-1,1,k=1), 0))
         if cobra.y < comida.y:
             cobra.mudar_direcao((0, 1))
         if cobra.y > comida.y:
