@@ -24,13 +24,6 @@ tela = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption('Snake Game')
 relogio = pygame.time.Clock()
 
-# Carregando sons
-try:
-    som_comida = mixer.Sound('comida.wav')
-    som_colisao = mixer.Sound('colisao.wav')
-except:
-    print("Arquivos de som não encontrados")
-
 def desenhar_grid():
     for x in range(0, LARGURA, TAMANHO_BLOCO):
         for y in range(0, ALTURA, TAMANHO_BLOCO):
@@ -49,10 +42,6 @@ class Snake:
         self.cor = VERDE
         self.pontos = 0
         self.velocidade = VELOCIDADE
-
-    @property
-    def direcao(self):
-        return self.direcao
 
     @property
     def x(self):
@@ -112,22 +101,25 @@ def desenhar_pontuacao(superficie, pontos):
 def main():
     cobra = Snake()
     comida = Comida()
-    
+
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 return
         #Colocar comandos IA aqui
-        if cobra.y == comida.y and cobra.x < comida.x and cobra.direcao == ((-1, 0)):
-            cobra.mudar_direcao((0, random.choice([(-1),(1)])))
+        if cobra.y == comida.y and cobra.x < comida.x and cobra.direcao == (-1, 0):
+            cobra.mudar_direcao((0, random.choice([-1, 1])))
 
-        # if cobra.y == comida.y and cobra.x > comida.x and cobra.direcao ((1, 0)):
-        #     cobra.mudar_direcao((0, random.sample(-1,1,k=1)))
-        # if cobra.x == comida.x and cobra.y < comida.y and cobra.direcao ((0, -1)):
-        #     cobra.mudar_direcao((random.sample(-1,1,k=1), 0))
-        # if cobra.x == comida.x and cobra.y > comida.y and cobra.direcao ((0, 1)):
-        #     cobra.mudar_direcao((random.sample(-1,1,k=1), 0))
+        if cobra.y == comida.y and cobra.x > comida.x and cobra.direcao == (1, 0):
+            cobra.mudar_direcao((0, random.choice([-1, 1])))
+
+        if cobra.x == comida.x and cobra.y < comida.y and cobra.direcao == (0, -1):
+            cobra.mudar_direcao((random.choice([-1, 1]), 0))
+
+        if cobra.x == comida.x and cobra.y > comida.y and cobra.direcao == (0, 1):
+            cobra.mudar_direcao((random.choice([-1, 1]), 0))
+
         if cobra.y < comida.y:
             cobra.mudar_direcao((0, 1))
         if cobra.y > comida.y:
@@ -139,11 +131,7 @@ def main():
 
         # Movimento e colisão
         if not cobra.mover():
-            try:
-                som_colisao.play()
-            except:
-                pass
-            pygame.time.wait(1000)
+            pygame.time.wait(1)
             cobra = Snake()
             comida = Comida()
             continue
@@ -152,10 +140,7 @@ def main():
         if cobra.pegar_cabeca() == comida.posicao:
             cobra.tamanho += 1
             cobra.pontos += 10
-            try:
-                som_comida.play()
-            except:
-                pass
+
             comida.gerar_nova_posicao()
             while comida.posicao in cobra.posicoes:
                 comida.gerar_nova_posicao()
